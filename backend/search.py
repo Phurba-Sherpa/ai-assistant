@@ -40,4 +40,4 @@ vector_store = SupabaseVectorStore(
 
 query = "What is the flow for card action?"
 matched_docs = vector_store.similarity_search(query)
-print(matched_docs[0].page_content)
+print(matched_docs)
