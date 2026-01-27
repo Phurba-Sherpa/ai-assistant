@@ -12,3 +12,6 @@ dependencies = [
     "python-dotenv>=1.2.1",
     "supabase>=2.27.2",
 ]
+
+[tool.uv.sources]
+langchain-community = { git = "https://github.com/langchain-ai/langchain-community.git", subdirectory = "libs/community" }
