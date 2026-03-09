@@ -10,8 +10,8 @@ from storage3 import create_client
 from supabase import Client, create_client
 
 # llm config
-# chat_model = "llama3.1:latest"
-chat_model = "google/gemini-2.5-flash"
+chat_model = "gpt-oss:20b-cloud"
+# chat_model = "google/gemini-2.5-flash"
 embed_model = "nomic-embed-text"
 
 
@@ -34,11 +34,8 @@ ls_key = load_env("LANGSMITH_API_KEY")
 base_url = load_env("OLLAMA_BASE_URL")
 sb_url: str = load_env("SUPABASE_URL")
 sb_key: str = load_env("SUPABASE_KEY")
-or_base_url = load_env("OPENROUTER_BASE_URL")
-or_key = load_env("OPENROUTER_API_KEY")
-
-print(or_base_url)
-print(or_key)
+# or_base_url = load_env("OPENROUTER_BASE_URL")
+# or_key = load_env("OPENROUTER_API_KEY")
 
 """
 For RAG application, we need 3 components
@@ -46,10 +43,10 @@ For RAG application, we need 3 components
 2. Embed model
 3. Vector store
 """
-# llm = ChatOllama(model=chat_model, base_url=base_url)
-llm = ChatOpenAI(
-    model=chat_model, api_key=or_key, base_url=or_base_url, max_tokens=15000
-)
+llm = ChatOllama(model=chat_model, base_url=base_url)
+# llm = ChatOpenAI(
+#     model=chat_model, api_key=or_key, base_url=or_base_url, max_tokens=15000
+# )
 embeddings = OllamaEmbeddings(model=embed_model, base_url=base_url)
 supabase: Client = create_client(sb_url, sb_key)
 vector_store = SupabaseVectorStore(
@@ -73,7 +70,8 @@ def retrieve_context(query: str):
 
 
 tools = [retrieve_context]
-query = "What is the new card activation flow? Explain in layman language"
+# query = "What is the new card activation flow? Explain in layman language"
+query = "नयाँ कार्ड सक्रिय गर्ने प्रक्रिया के हो? साधारण भाषामा व्याख्या गर्नुहोस्।"
 prompt = (
     "You have access to a tool that retrieves context from a blog post. "
     "Use the tool to help answer user queries."
