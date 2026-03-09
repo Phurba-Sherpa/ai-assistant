@@ -28,6 +28,6 @@ jobs:
       - name: Run opencode
         uses: anomalyco/opencode/github@latest
         env:
-          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
         with:
-          model: openrouter/moonshotai/kimi-k2:free
+          model: ollama-cloud/gpt-oss:120b
