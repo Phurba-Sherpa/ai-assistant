@@ -4,7 +4,7 @@ name: Fe ci
 on:
   push:
     paths: 
-      - 'frontend/'
+      - 'frontend/**'
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
