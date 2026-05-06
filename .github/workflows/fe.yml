@@ -51,7 +51,7 @@ jobs:
     - name: SSH into EC2 and run app
       uses: appleboy/ssh-action@v1
       with:
-        host: ${{ secrets.HOST }}
+        host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USERNAME }}
         key: ${{ secrets.EC2_KEY }}
         script: |
