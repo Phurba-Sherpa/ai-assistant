@@ -43,6 +43,7 @@ jobs:
         push: ${{github.event_name != 'pull_request'}}
         tags: ${{steps.meta.outputs.tags}}
         annotations: ${{steps.meta.outputs.annotations}}
+        file: ./frontend/Dockerfile
         provenance: true
         sbom: true
 
