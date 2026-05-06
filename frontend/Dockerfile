@@ -16,6 +16,7 @@ RUN --mount=type=cache,target=/root/.npm \
 
 FROM nginx:alpine AS release
 
+WORKDIR /fe
 RUN rm -rf /usr/share/nginx/html/*
 
 COPY --from=builder /frontend/dist /usr/share/nginx/html
