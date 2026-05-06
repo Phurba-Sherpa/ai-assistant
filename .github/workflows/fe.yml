@@ -53,14 +53,37 @@ jobs:
     environment:
       name: dev
     needs: build
+    if: github.event_name != 'pull_request'
+    env: 
+      GHCR_PAT: ${{secrets.GH_TOKEN}}
+      GH_OWNER: ${{github.repository_owner}}
+
     steps:
-      - name: SSH into EC2 and run app
+      - name: Checkout compose file only
+        uses: actions/checkout@v6
+        with:
+          sparese-checkout: |
+            compose.yml
+          sparse-checkout-cone-mode: false
+
+      - name: Copy compose file to EC2
+        uses: appleboy/scp-action@0.1.7
+        with:
+          host: ${{secrets.ec2_host}}
+          username: ${{secrets.ec2_username}}
+          key: ${{secrets.ec2_key}}
+          source: compose.yml
+          target: ~/ai-assistant
+
+      - name: SSH and Deploy
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_KEY }}
+          envs: GHCR_PAT, GH_OWNER
           script: |
-            mkdir -p fe && cd $_
-            sudo docker compose pull
-            sudo docker compose up frontend -d
+            echo $GHCR_PAT | docker login ghcr.io -u $GH_OWNER --password-stdin
+            cd ~/ai-assistant
+            docker compose pull
+            docker compose up frontend -d
