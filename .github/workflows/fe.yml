@@ -67,7 +67,7 @@ jobs:
           sparse-checkout-cone-mode: false
 
       - name: Copy compose file to EC2
-        uses: appleboy/scp-action@0.1.7
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{secrets.ec2_host}}
           username: ${{secrets.ec2_username}}
