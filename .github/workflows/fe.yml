@@ -66,14 +66,12 @@ jobs:
     needs: build
     steps:
       - name: SSH into EC2 and run app
-      uses: appleboy/ssh-action@v1
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ${{ secrets.EC2_USERNAME }}
-        key: ${{ secrets.EC2_KEY }}
-        script: |
-          mkdir -p fe && cd $_
-          sudo docker compose pull
-          sudo docker compose up frontend -d
-
-
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          script: |
+            mkdir -p fe && cd $_
+            sudo docker compose pull
+            sudo docker compose up frontend -d
