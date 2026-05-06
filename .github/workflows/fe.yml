@@ -62,7 +62,7 @@ jobs:
       - name: Checkout compose file only
         uses: actions/checkout@v6
         with:
-          sparese-checkout: |
+          sparse-checkout: |
             compose.yml
           sparse-checkout-cone-mode: false
 
@@ -85,5 +85,5 @@ jobs:
           script: |
             echo $GHCR_PAT | docker login ghcr.io -u $GH_OWNER --password-stdin
             cd ~/ai-assistant
-            docker compose pull
-            docker compose up frontend -d
+            sudo docker compose pull
+            sudo docker compose up frontend -d
