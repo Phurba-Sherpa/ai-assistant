@@ -1,0 +1,29 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    breanches: 
+      - 'main'
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Important for commit history analysis
+
+      - name: Run AI Code Review
+        uses: zxcloli666/AI-Code-Review@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
+          OPENAI_API_BASE_URL: 'https://ollama.com/v1'
+          OPENAI_API_MODEL: 'qwen3-coder:480b-cloud'
+
