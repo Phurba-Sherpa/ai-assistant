@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0  # Important for commit history analysis
 
       - name: Run AI PR Review
-        uses: phurba-sherpa/ollama-pr-review@v1.1.0
+        uses: phurba-sherpa/ollama-pr-review-action@v1.1.0
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
