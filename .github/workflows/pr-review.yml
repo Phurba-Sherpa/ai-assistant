@@ -1,0 +1,32 @@
+name: AI PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: 
+      - 'main'
+
+jobs:
+  ai-review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0  # Important for commit history analysis
+
+      - name: Run AI PR Review
+        uses: phurba-sherpa/ollama-pr-review-action@v1.1.0
+        with:
+          OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
+          OLLAMA_API_URL: 'https://ollama.com'
+          MODEL: 'qwen3-coder:480b-cloud'
+          OWNER: ${{github.repository_owner}}
+          REPO: ${{github.event.repository.name}}
+          MY_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{github.event.pull_request.number}}
+
